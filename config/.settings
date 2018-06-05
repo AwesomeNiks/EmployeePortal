@@ -1,0 +1,17 @@
+{
+    "projectName": "Training Assignments",
+    "username": "vinaygurnani20@resourceful-bear-269032.com",
+    "id": "3bd4b580-5a66-11e8-b70f-1f9b8b8b389d",
+    "namespace": "",
+    "orgType": "developer",
+    "loginUrl": "https://login.salesforce.com/",
+    "instanceUrl": "https://resourceful-bear-269032-dev-ed.my.salesforce.com",
+    "workspace": "D://Incapsulate//Projects",
+    "subscription": [
+        "ApexClass",
+        "ApexComponent",
+        "ApexPage",
+        "ApexTrigger",
+        "StaticResource"
+    ]
+}

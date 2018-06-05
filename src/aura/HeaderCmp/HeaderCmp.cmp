@@ -1,0 +1,20 @@
+<!-- 
+__Name : Vinay Gurnani
+__Date : 6/4/2018
+__Desc : Header Component for Employee Portal Application -->		
+<aura:component controller="GetEmployeeDetails">
+
+	<aura:attribute name="greeting" type="string" description="It will contain the following values - Morning,Afternoon and Evening"/>
+	
+	<aura:attribute name="UserName" type="string" description="It will contain the current logged in user's name"/>
+	
+	<!--Initialize the values of greeting and UserName -->
+	<aura:handler name="init" value="{!this}" action="{!c.get_greeting}"/>
+
+	<header class="slds-page-header">
+     <center>
+            <h1 class="slds-page-header__title">Good {!v.greeting}, {!v.UserName}!!!</h1>
+        </center>
+    </header>
+
+</aura:component>
