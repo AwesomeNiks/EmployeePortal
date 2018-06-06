@@ -44,10 +44,10 @@
             	console.log("Error Fetching Data");
         });
         $A.enqueueAction(action);
-    }
+      }
     },
     showContact: function(component, event, helper){
-    	 var idx =  event.getSource().get("v.value").Id;
+    	 var idx =  event.getSource.get("v.value").Id;
         console.log(idx);
         
     	var navEvt = $A.get("e.force:navigateToSObject");

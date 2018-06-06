@@ -434,7 +434,7 @@
         "id": "0Adf4000001ak4oCAA",
         "lastModifiedById": "005f4000002SGd1AAG",
         "lastModifiedByName": "Vinay Gurnani",
-        "lastModifiedDate": "2018-06-04T09:09:02.000Z",
+        "lastModifiedDate": "2018-06-05T12:06:17.000Z",
         "manageableState": "unmanaged",
         "type": "AuraDefinitionBundle",
         "mmState": "clean"
@@ -490,7 +490,7 @@
         "id": "0Adf4000001ak58CAA",
         "lastModifiedById": "005f4000002SGd1AAG",
         "lastModifiedByName": "Vinay Gurnani",
-        "lastModifiedDate": "2018-06-04T09:08:27.000Z",
+        "lastModifiedDate": "2018-06-05T13:23:56.000Z",
         "manageableState": "unmanaged",
         "type": "AuraDefinitionBundle",
         "mmState": "clean"
@@ -504,7 +504,7 @@
         "id": "0Adf4000001ak4VCAQ",
         "lastModifiedById": "005f4000002SGd1AAG",
         "lastModifiedByName": "Vinay Gurnani",
-        "lastModifiedDate": "2018-06-01T05:22:46.000Z",
+        "lastModifiedDate": "2018-06-05T11:18:36.000Z",
         "manageableState": "unmanaged",
         "type": "AuraDefinitionBundle",
         "mmState": "clean"
@@ -764,17 +764,15 @@
         "mmState": "clean"
     },
     "BodyCmpController.cls": {
-        "id": "01pf400000FgLReAAN",
-        "name": "BodyCmpController",
-        "createdDate": "2018-05-29T19:04:04.000+0000",
         "createdById": "005f4000002SGd1AAG",
-        "namespacePrefix": null,
-        "lastModifiedById": "005f4000002SGd1AAG",
-        "lastModifiedDate": "2018-06-04T12:37:32.000+0000",
-        "fullName": "BodyCmpController",
-        "fileName": "unpackaged/classes/BodyCmpController.cls",
         "createdByName": "Vinay Gurnani",
+        "createdDate": "2018-05-29T19:04:04.000Z",
+        "fileName": "unpackaged/classes/BodyCmpController.cls",
+        "fullName": "BodyCmpController",
+        "id": "01pf400000FgLReAAN",
+        "lastModifiedById": "005f4000002SGd1AAG",
         "lastModifiedByName": "Vinay Gurnani",
+        "lastModifiedDate": "2018-06-05T13:17:33.000Z",
         "manageableState": "unmanaged",
         "type": "ApexClass",
         "mmState": "clean"

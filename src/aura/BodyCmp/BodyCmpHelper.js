@@ -2,9 +2,12 @@
 	GetPersonalDetails : function(component) {
 		var action = component.get("c.fetchDetails");
         action.setCallback(this, function(response){
-        	console.log('Personal Details --->' + JSON.stringify(response));
+        	console.log(response.getState());
             if(response.getState()==="SUCCESS"){
-                component.set("v.CurrentContact",response.getReturnValue());
+                component.set("v.recordId",response.getReturnValue());
+                component.set("v.ShowPD",true);
+                var a=component.get("v.recordId");
+                console.log(component.get("v.ShowPD"));
             }
             else
             	console.log("Error Fetching Data");

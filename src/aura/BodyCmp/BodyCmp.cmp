@@ -1,6 +1,11 @@
 <aura:component controller="BodyCmpController">
 	
   <aura:attribute name="CurrentContact" type="Contact" description="Hold the Current Logged in User's Contact details"/>
+  <aura:attribute name="Count_Emer" type="Boolean"/>
+  <aura:attribute name="recordId" type="id"/>
+  <aura:attribute name="ShowPD" type="Boolean"/>
+  <aura:attribute name="ShowCerti" type="Boolean"/>
+  <aura:attribute name="ShowEmergencyCon" type="Boolean"/>
 
   <aura:attribute name="Current_Contact_Certificate" type="Certificate__c[]" description="Hold the Current Logged in User's Certificate details"/>
 
@@ -8,11 +13,20 @@
 
   <aura:attribute name="Search_Contact" type="Contact[]" description="Hold the Contact List of Searched Keyword"/>
 
+
+
   <!-- Initialization of the CurrentContact,Current_Contact_Certificate and Current_Emergency_Contact-->
-  <aura:handler name="init" value="{!this}" action="{!c.get_Details}"/>
+ <aura:handler name="init" value="{!this}" action="{!c.get_Details}"/>
     
 	<lightning:tabset variant="vertical">
     <!-- PERSONAL DETAILS TAB -->
+    <aura:if isTrue="{!v.ShowPD}">
+      <force:recordData aura:id="PersonalDetailsLoader"
+      					recordId="{!v.recordId}"
+      					fields="FirstName,LastName,Designation__c,Technology__c,Social_Media_Link__c,Interests__c"
+      					targetFields="{!v.CurrentContact}"
+      />
+     </aura:if>
       <lightning:tab label="Personal Details">
         <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_cell-buffer">
 			    <tr>
@@ -123,7 +137,7 @@
               <aura:iteration items="{!v.Current_Emergency_Contact}" var="Econtact" >
               <tr>
                 <td scope="col">
-                    <div class="slds-truncate" title="Name1">{!Econtact.Name}</div>
+                    <div class="slds-truncate">{!Econtact.Name}</div>
                 </td>
                 <td scope="col">
                     <div class="slds-truncate">{!Econtact.Phone}</div>
@@ -133,7 +147,12 @@
                 </td>              
                 <td scope="col">
                     <div class="slds-truncate">{!Econtact.RelationShip__c}</div>
-                </td>  
+                </td> 
+                <td>
+                 <!-- <aura:if isTrue="{!v.Count_Emer}"> -->
+                    <lightning:button label="Delete" onClick="{c.Delete_Emer_Contact}"/>
+                  <!--</aura:if>-->
+                </td>
               </tr>
               </aura:iteration>
           </table>

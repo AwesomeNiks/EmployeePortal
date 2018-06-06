@@ -12,20 +12,12 @@ public with sharing class BodyCmpController {
 
 	@auraenabled
 	//Method to return current user details for the personal details tab
-  	public static Contact fetchDetails(){
+  	public static id fetchDetails(){
   		try{
-  		String CurrentUser_Name = UserInfo.getName();
-		CurrentUser = [select 	id,
-								Name,
-								FirstName,
-								LastName,
-								Designation__c,
-								Technology__c,
-								Social_Media_Link__c,
-								Interests__c 
-								from Contact where Name=:CurrentUser_Name];
-       
-		return CurrentUser;
+  		String CurrentUser_Id = UserInfo.getUserId();
+		CurrentUser = [select id from Contact where User__c=:CurrentUser_Id];
+		System.debug(CurrentUser.Id);
+		return CurrentUser.Id;
 		}
 		catch(Exception e){
 			System.debug(e);
@@ -37,9 +29,9 @@ public with sharing class BodyCmpController {
 	//Method to return list of Current Contact's Certificates for the Certificates tab
 	public static List<Certificate__c> fetchCertificates(){
         try{
-		String CurrentUser_Name = UserInfo.getName();
-		CurrentUser = [select id from Contact where Name=:CurrentUser_Name];
-			return [select Name , Link__c , Valid_Till__c from Certificate__c where Contact__r.id = :CurrentUser.id];
+		String CurrentUser_Id = UserInfo.getUserId();
+		CurrentUser = [select id from Contact where User__c=:CurrentUser_Id];
+			return [select Name , Link__c , Valid_Till__c from Certificate__c where Contact__c = :CurrentUser.Id];
 		}
 		catch(Exception e){
 			System.debug(e);
@@ -51,9 +43,9 @@ public with sharing class BodyCmpController {
 	//Method to return list of emergency contacts associated with the current contact for the Emergency Contact tab
 	public static List<Contact> fetchEmergencyContacts(){
         	try{
-        	String CurrentUser_Name = UserInfo.getName();
-        	CurrentUser = [select id from Contact where Name=:CurrentUser_Name];
-			return [select Name,Phone,Email,RelationShip__c from Contact where Emergency_Contact__r.id =:CurrentUser.id];
+        	String CurrentUser_Id = UserInfo.getUserId();
+        	CurrentUser = [select id from Contact where User__c=:CurrentUser_Id];
+			return [select Name,Phone,Email,RelationShip__c from Contact where Emergency_Contact__c =:CurrentUser.Id];
 			}
 			catch(Exception e){
 			System.debug(e);
