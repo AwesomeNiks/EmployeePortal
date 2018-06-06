@@ -47,14 +47,38 @@
       }
     },
     showContact: function(component, event, helper){
-    	 var idx =  event.getSource.get("v.value").Id;
+    	 var idx =  event.getSource().get("v.value").Id;
         console.log(idx);
         
     	var navEvt = $A.get("e.force:navigateToSObject");
         navEvt.setParams({
           "recordId": idx,
-          "slideDevName": "details"
+          "slideDevName": "detail"
         });
         navEvt.fire();
+    },
+    Delete_Emer_Contact : function(component, event, helper){
+        console.log("Entering Delete Stage");
+        var a =event.getSource().get("v.value");
+        console.log(a);
+		component.set("v.DeleterecordId",event.getSource().get("v.value"));
+        console.log(component.get("v.DeleterecordId"));
+        component.set("v.ShowEmergencyCon",true);
+        component.find("deleteRecorddetails").reloadRecord();
+    },
+    recordUpdated : function(component){
+        component.find("deleteRecorddetails").deleteRecord($A.getCallback(function(deleteResult){
+            if (deleteResult.state === "SUCCESS" || deleteResult.state === "DRAFT") {
+                var resultsToast = $A.get("e.force:showToast");
+           		 resultsToast.setParams({
+                			"title": "Deleted",
+                			"message": "The record was deleted."
+            	});
+           		 resultsToast.fire();
+                console.log("Record is deleted.");
+                component.set("v.Count_Emer","v.Count_Emer.length-1");
+            }
+        }))
+        $A.get('e.force:refreshView').fire();
     }
 })

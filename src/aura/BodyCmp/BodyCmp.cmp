@@ -1,8 +1,9 @@
-<aura:component controller="BodyCmpController">
+<aura:component controller="BodyCmpController" access="global">
 	
   <aura:attribute name="CurrentContact" type="Contact" description="Hold the Current Logged in User's Contact details"/>
   <aura:attribute name="Count_Emer" type="Boolean"/>
   <aura:attribute name="recordId" type="id"/>
+  <aura:attribute name="DeleterecordId" type="id"/>
   <aura:attribute name="ShowPD" type="Boolean"/>
   <aura:attribute name="ShowCerti" type="Boolean"/>
   <aura:attribute name="ShowEmergencyCon" type="Boolean"/>
@@ -118,6 +119,13 @@
           </table>
         </lightning:tab>
         <lightning:tab label="Emergency Contact">
+            <aura:if isTrue="{!v.ShowEmergencyCon}">
+            <force:recordData aura:id="deleteRecorddetails"
+								recordId="{!v.DeleterecordId}"
+								fields="Id"
+                             	recordUpdated="{!c.recordUpdated}"
+                  />
+             </aura:if>
              <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_cell-buffer">
               
               <tr class="slds-text-title_caps">
@@ -149,11 +157,11 @@
                     <div class="slds-truncate">{!Econtact.RelationShip__c}</div>
                 </td> 
                 <td>
-                 <!-- <aura:if isTrue="{!v.Count_Emer}"> -->
-                    <lightning:button label="Delete" onClick="{c.Delete_Emer_Contact}"/>
-                  <!--</aura:if>-->
+                 <aura:if isTrue="{!v.Count_Emer>1}">
+                    <lightning:button label="Delete" value="{!Econtact.Id}" onclick="{!c.Delete_Emer_Contact}"/>
+                 </aura:if> 
                 </td>
-              </tr>
+              </tr>   
               </aura:iteration>
           </table>
         </lightning:tab>
@@ -163,7 +171,7 @@
             <aura:iteration items="{!v.Search_Contact}" var="Scontact"  indexVar="index">
               <tr>
                 <td scope="col">
-                    <div class="slds-truncate"><button type="button" onclick="{!c.showContact}"> {!Scontact.Name}</button>
+                    <div class="slds-truncate"><lightning:button label="{!Scontact.Name}" value="{!Scontact}" onclick="{!c.showContact}"/>
                     </div>
                 </td>
 

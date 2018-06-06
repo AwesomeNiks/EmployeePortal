@@ -31,10 +31,13 @@
         action.setCallback(this, function(response){
             if(response.getState()==="SUCCESS"){
                 component.set("v.Current_Emergency_Contact",response.getReturnValue());
+                component.set("v.Count_Emer",component.get("v.Current_Emergency_Contact.length"));
+                console.log(component.get("v.Count_Emer"));
             }
             else
             	console.log("Error Fetching Data");
         });
         $A.enqueueAction(action);
-	}
+	},
+    
 })
