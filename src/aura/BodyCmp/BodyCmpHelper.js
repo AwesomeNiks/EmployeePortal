@@ -1,5 +1,6 @@
 ({
-	GetPersonalDetails : function(component) {
+	
+    GetPersonalDetails : function(component) {
 		var action = component.get("c.fetchDetails");
         action.setCallback(this, function(response){
         	console.log(response.getState());
@@ -38,6 +39,6 @@
             	console.log("Error Fetching Data");
         });
         $A.enqueueAction(action);
-	},
+	}
     
 })

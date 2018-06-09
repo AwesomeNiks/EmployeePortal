@@ -2,19 +2,22 @@
 	
   <aura:attribute name="CurrentContact" type="Contact" description="Hold the Current Logged in User's Contact details"/>
   <aura:attribute name="Count_Emer" type="Boolean"/>
+  <!--<aura:attribute name="All_Contact" type="List"/>-->
+  <aura:attribute type="Integer"      name="pageNumber"   default="1" />
+  <aura:attribute type="Integer"      name="maxPage"      default="1" />
   <aura:attribute name="recordId" type="id"/>
   <aura:attribute name="DeleterecordId" type="id"/>
   <aura:attribute name="ShowPD" type="Boolean"/>
   <aura:attribute name="ShowCerti" type="Boolean"/>
   <aura:attribute name="ShowEmergencyCon" type="Boolean"/>
-
+  <!--<aura:attribute name="All_Certi" type="List"/>-->
   <aura:attribute name="Current_Contact_Certificate" type="Certificate__c[]" description="Hold the Current Logged in User's Certificate details"/>
 
   <aura:attribute name="Current_Emergency_Contact" type="Contact[]" description="Hold the Current Logged in User's Emergency Contact details"/>
 
   <aura:attribute name="Search_Contact" type="Contact[]" description="Hold the Contact List of Searched Keyword"/>
 
-
+  <aura:handler  name="setAttribute" event="c:setMaxPageEvent" action="{!c.setAttributeValue}"/>
 
   <!-- Initialization of the CurrentContact,Current_Contact_Certificate and Current_Emergency_Contact-->
  <aura:handler name="init" value="{!this}" action="{!c.get_Details}"/>
@@ -102,7 +105,7 @@
                         <div class="slds-truncate" title="Expiration">Expiration</div>
                 </th>
               </tr>
-              <aura:iteration items="{!v.Current_Contact_Certificate}" var="Certificate" >
+              <aura:iteration items="{!v.Current_Contact_Certificate}" var="Certificate" indexVar="indx">
               <tr>
                 <td scope="col">
                     <div class="slds-truncate" title="Name1">{!Certificate.Name}</div>
@@ -113,10 +116,14 @@
                 <td scope="col">
                     <div class="slds-truncate">{!Certificate.Valid_Till__c}</div>
                 </td>              
-       
+                <td>
+              <lightning:button name="modal1" label="Edit" value="{!indx}" onclick="{!c.edit}" />
+            </td>
               </tr>
+              
               </aura:iteration>
           </table>
+          <c:PieChart/>
         </lightning:tab>
         <lightning:tab label="Emergency Contact">
             <aura:if isTrue="{!v.ShowEmergencyCon}">
@@ -166,18 +173,9 @@
           </table>
         </lightning:tab>
         <lightning:tab label="Know Your Colleagues">
-            <lightning:input type="search" aura:id="search" label="Search" name="search" placeholder="Enter Colleague Name" onchange="{!c.searchKey}"/>
-            <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_cell-buffer">
-            <aura:iteration items="{!v.Search_Contact}" var="Scontact"  indexVar="index">
-              <tr>
-                <td scope="col">
-                    <div class="slds-truncate"><lightning:button label="{!Scontact.Name}" value="{!Scontact}" onclick="{!c.showContact}"/>
-                    </div>
-                </td>
-
-            </tr>
-          </aura:iteration>
-        </table>
+            
+        <c:PaginationCmp currentPageNumber="{!v.pageNumber}" 
+                        maxPageNumber="{!v.maxPage}"/>
         </lightning:tab>
     </lightning:tabset>
 </aura:component>

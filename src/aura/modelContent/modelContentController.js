@@ -5,12 +5,26 @@
         var Link = component.find("Certificate_Link").get("v.value");
         var Valid = component.find("Certificate_Date").get("v.value");
         var action = component.get("c.AddCerti");
-        action.setParams({NewName : Name, NewLink : Link, NewDate : Valid});
+        var id=component.get("v.certiId");
+        console.log("this is id");
+        console.log(id);
+        var certifId;
+        if(!id || /^\s*$/.test(id)) {
+            certifId=null;
+            console.log("Entering if");
+        }
+        else
+         {  
+            certifId=id;
+            console.log(certifId);
+            console.log("Entering else");
+        }
+        action.setParams({certiId: certifId,NewName : Name, NewLink : Link, NewDate : Valid});
         action.setCallback(this, function(response){
-            debugger;
+            
             if(response.getState()==="SUCCESS"){
 
-                 console.log('SUCCESS');
+                console.log('SUCCESS');
                $A.get('e.force:refreshView').fire();
                 component.find("overlayLib").notifyClose();
             }

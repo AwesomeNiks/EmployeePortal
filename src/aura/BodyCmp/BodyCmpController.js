@@ -1,12 +1,14 @@
 ({
 	get_Details : function(component, event, helper) {
 
-        helper.GetPersonalDetails(component);
+      helper.GetPersonalDetails(component);
 
     	helper.GetCertificateDetails(component);
 
     	helper.GetEmergencyContacts(component);
 
+      
+      
     },
 	handleShowModal: function(component, evt, helper) {
         var modalBody;
@@ -27,25 +29,7 @@
                 }                              
            });
     },
-    searchKey: function(component, evt, helper){
-
-    	var key = component.find("search").get("v.value");
-    	if (key==""){
-    		component.set("v.Search_Contact",null);	
-    	}
-    	else{
-    	var action = component.get("c.searchContacts");
-    	action.setParams( {skey : key} );
-        action.setCallback(this, function(response){
-            if(response.getState()==="SUCCESS"){
-                component.set("v.Search_Contact",response.getReturnValue());
-            }
-            else
-            	console.log("Error Fetching Data");
-        });
-        $A.enqueueAction(action);
-      }
-    },
+    
     showContact: function(component, event, helper){
     	 var idx =  event.getSource().get("v.value").Id;
         console.log(idx);
@@ -61,7 +45,7 @@
         console.log("Entering Delete Stage");
         var a =event.getSource().get("v.value");
         console.log(a);
-		component.set("v.DeleterecordId",event.getSource().get("v.value"));
+		    component.set("v.DeleterecordId",event.getSource().get("v.value"));
         console.log(component.get("v.DeleterecordId"));
         component.set("v.ShowEmergencyCon",true);
         component.find("deleteRecorddetails").reloadRecord();
@@ -80,5 +64,36 @@
             }
         }))
         $A.get('e.force:refreshView').fire();
-    }
+    },
+
+    setAttributeValue: function(component,event){
+      console.log('event handled');
+      console.log(event);
+      var eventValue= event.getParam('attributeValue');
+      console.log(eventValue);  
+        component.set("v.maxPage", eventValue);
+    },
+     edit : function(component, event, helper) {
+            var a =event.getSource().get("v.value");
+            var cname = component.get("v.Current_Contact_Certificate");
+            console.log(a);
+            console.log("CNAME : " + cname[a].Name);
+            var modalBody;
+            $A.createComponent("c:modelContent", {"certiId":cname[a].Id,"certiName":cname[a].Name, "certiLink":cname[a].Link__c, "certiValid":cname[a].Valid_Till__c},
+               function(content, status) {
+                   if (status === "SUCCESS") {
+                       modalBody = content;
+                       component.find('overlayLib').showCustomModal({
+                           header: "Application Confirmation",
+                           body: modalBody, 
+                           showCloseButton: true,
+                           cssClass: "mymodal",
+                           
+                       })
+                       
+                   }                               
+               });
+
+            }
+    
 })
