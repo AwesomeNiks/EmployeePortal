@@ -1,3 +1,8 @@
+<!--
+__Name : Vinay Gurnani
+__Date : 11/6/2018
+__Description : Container Component to hold other components
+-->
 <aura:component implements="flexipage:availableForAllPageTypes" access="global">
 	<c:HeaderCmp />
     <c:BodyCmp />

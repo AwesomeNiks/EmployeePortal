@@ -1,6 +1,11 @@
+<!--
+__Name : Vinay Gurnani
+__Date : 11/6/2018
+__Description : Show pie Chart of No of Employees according to certifcations 
+-->
 <aura:component controller="BodyCmpController" implements="flexipage:availableForAllPageTypes">
 	<ltng:require scripts="{!$Resource.Chart}" afterScriptsLoaded="{!c.generateChart}"/>
     <div class="slds-box">
-		<canvas aura:id="linechart" height="1" width="5"></canvas>
+		<canvas aura:id="piechart" height="1" width="5"></canvas>
     </div>
 </aura:component>

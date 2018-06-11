@@ -1,5 +1,6 @@
 ({
-	generateChart : function(component, event, helper) {
+	//Get details to be displayed in Pie chart
+    generateChart : function(component, event, helper) {
 		var colors=['#FF6384','#1F3976','#36A2EB','#99B641','#bed2ce','#0abc70','#f5b022','#e85e7f','#41B67F']
 		var action = component.get("c.getPieInfo");
         action.setCallback(this, function(response){
@@ -32,8 +33,8 @@
                 }
            ]
         }
-         var ctx = component.find("linechart").getElement();
-        console.log(ctx);
+        var ctx = component.find("piechart").getElement();
+        
         var lineChart = new Chart(ctx ,{
             type: 'pie',
             data: chartdata,

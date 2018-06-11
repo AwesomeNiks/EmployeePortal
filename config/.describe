@@ -662,13 +662,6 @@
             "xmlName": "PlatformCachePartition"
         },
         {
-            "directoryName": "assistantRecommendationTypes",
-            "inFolder": false,
-            "metaFile": false,
-            "suffix": "assistantRecommendationType",
-            "xmlName": "AssistantRecommendationType"
-        },
-        {
             "directoryName": "topicsForObjects",
             "inFolder": false,
             "metaFile": false,

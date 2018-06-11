@@ -15,6 +15,7 @@
         });
         $A.enqueueAction(action);
 	},
+
 	GetCertificateDetails : function (component) {
 		var action = component.get("c.fetchCertificates");
         action.setCallback(this, function(response){
@@ -27,6 +28,7 @@
         });
         $A.enqueueAction(action);
 	},
+    
 	GetEmergencyContacts : function (component) {
 		var action = component.get("c.fetchEmergencyContacts");
         action.setCallback(this, function(response){

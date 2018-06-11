@@ -1,18 +1,24 @@
+<!--
+__Name : Vinay Gurnani
+__Date : 11/6/2018
+__Description : Child component of Body Component to show all contacts with Pagination and Search bar 
+-->
 <aura:component controller="BodyCmpController" access="global">
-    <aura:attribute name="currentPageNumber" type="Integer" default="1"/>
-    <aura:attribute name="maxPageNumber" type="Integer" required="true" />
-    <aura:attribute type="Integer"      name="pageNumber"   default="1" />
-    <aura:attribute type="Integer"      name="originalValue"/>
-    <aura:registerEvent name="setAttribute" type="c:setMaxPageEvent"/>
-    <aura:attribute name="togglePagi" type="Boolean"/>
-    <aura:attribute name="All_Contact" type="List"/>
-	<aura:attribute name="All_Certi" type="List"/>
-	<aura:attribute name="displayList" type="List"/>
-	<aura:attribute name="currentList" type="List"/>
-	<aura:attribute name="Search_Contact" type="Contact[]" description="Hold the Contact List of Searched Keyword"/>
-	<aura:handler name="init" value="{!this}" action="{!c.myAction}" aura:id="max"/>
+
+    <aura:attribute name="currentPageNumber" type="Integer" default="1" description="Holds current page number"/>
+    <aura:attribute name="maxPageNumber" type="Integer" default="1" description="Holds max page number"/>
+    <aura:attribute name="originalValue" type="Integer"  description="Holds original value of maxPageNumber before Search"/>
+    <aura:attribute name="max" type="Boolean" description="Show Max Page Number"/>
+    <aura:attribute name="isNotSearch" type="Boolean" default="true" description="To check whether user has searched or not"/>
+    <aura:attribute name="All_Contact" type="List" description="Holds 10 current contacts"/>
+	<aura:attribute name="All_Certi" type="List" description="Holds certificate details of 10 current contacts"/>
+	<aura:attribute name="displayList" type="List" description="Holds List of Contacts to be displayed on the page"/>
+	<aura:attribute name="currentList" type="List" description="Holds the searched records"/>
 	
-	<lightning:input type="search" aura:id="search" label="Search" name="search" placeholder="Enter Colleague Name" onchange="{!c.searchKey}"/>
+    <!--Get all contacts details along with max page number-->
+	<aura:handler name="init" value="{!this}" action="{!c.myAction}" aura:id="max"/>
+	<!--SEARCH BAR -->
+    <lightning:input type="search" aura:id="search" label="Search" name="search" placeholder="Enter Colleague Name" onchange="{!c.searchKey}"/>
           
         <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_cell-buffer">
           <tr>
@@ -33,21 +39,24 @@
           </aura:iteration>
         </table>
     	
-    <div class="slds-button-group" role="group">
-        <button onclick="{!c.firstPage}" class="slds-button slds-button--neutral">
-            First
-        </button>
-        <button onclick="{!c.prevPage}" class="slds-button slds-button--neutral">
-            Prev
-        </button>
-        <button class="slds-button slds-button--neutral">
-            {!v.currentPageNumber} / {!v.maxPageNumber}
-        </button>
-        <button onclick="{!c.nextPage}" class="slds-button slds-button--neutral">
-            Next
-        </button>
-        <button onclick="{!c.lastPage}" class="slds-button slds-button--neutral">
-            Last
-        </button>
-    </div>
+        <div class="slds-button-group" role="group">
+            <button onclick="{!c.firstPage}" class="slds-button slds-button--neutral">
+                First
+            </button>
+            <button onclick="{!c.prevPage}" class="slds-button slds-button--neutral">
+                Prev
+            </button>
+            <aura:if isTrue="{!v.max}">
+                <button class="slds-button slds-button--neutral">
+                    {!v.currentPageNumber} / {!v.maxPageNumber}
+                </button>
+            </aura:if>
+            <button onclick="{!c.nextPage}" class="slds-button slds-button--neutral">
+                Next
+            </button>
+            <button onclick="{!c.lastPage}" class="slds-button slds-button--neutral">
+                Last
+            </button>
+        </div>
+
 </aura:component>

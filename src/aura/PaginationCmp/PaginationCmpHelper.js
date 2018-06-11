@@ -1,20 +1,14 @@
 ({
-	GetAllCertificates : function(component){
+	//Get All certificate count
+    GetAllCertificates : function(component){
         var action = component.get("c.getCount");
+        action.setStorable();
         action.setCallback(this, function(response){
             if(response.getState()==="SUCCESS"){
                 var temp = JSON.stringify(component.get("v.All_Contact"));
-                console.log(temp);
                 var colleague = JSON.parse(temp);
-                console.log(colleague);
-                
                 var certificates = response.getReturnValue();
                 console.log(certificates);
-                var temp2 = JSON.stringify(certificates);
-                console.log(temp2);
-                
-                
-
                 var custs = [];
                 for (var i in colleague ){
                     
@@ -26,48 +20,42 @@
                     
                 }
                 var a = component.find("max");
-                component.set("v.All_Certi", custs);
-
-                var setEvent = component.getEvent("setAttribute");
-                console.log(Math.floor((custs.length+4)/5));
-                component.set("v.originalValue",Math.floor((custs.length+4)/5))
-       			 setEvent.setParams({"attributeValue":component.get("v.originalValue")});
-       			 console.log(setEvent);
-       			 console.log("Event Fired");
-     			  setEvent.fire();
-	             this.renderPage(component);  	
+                console.log("certificates sec");
+                console.log(performance.now()-startTime);
+	            if(!component.get("v.isNotSearch")){
+                    component.set("v.currentList", custs);
+                    this.renderSearch(component);	
+                }
+                else
+                     component.set("v.displayList", custs);
             }
         });
+        var startTime = performance.now();
         $A.enqueueAction(action);
     },
+    //Get all contact name and id
     GetAllContacts : function(component){
         var action = component.get("c.fetchContacts");
+        action.setStorable();
+        action.setParams({num : component.get("v.currentPageNumber")});
         action.setCallback(this, function(response){
             if(response.getState()==="SUCCESS"){
-                
-             component.set("v.All_Contact",response.getReturnValue()); 
-             
+              
+             component.set("v.All_Contact",response.getReturnValue());
+             console.log("Contact sec"); 
+             console.log(performance.now()-startTime1);
              this.GetAllCertificates(component);  
          }
 
     });
+        var startTime1 = performance.now();
      $A.enqueueAction(action);
      },
-     renderPage: function(component){
-     	console.log('renderPage called');
-
-     	var toggle = component.get("v.togglePagi");
-     	if(toggle===true){
-     		var records= component.get("v.currentList");
-     		console.log("In the List");
-     	}
-     	else
-     	{	
-     	var records = component.get("v.All_Certi");
-    	 }	
+    //Show records of searched key according to page number 
+    renderSearch:function(component){
+        var records = component.get("v.currentList");
         var pageNumber = component.get("v.currentPageNumber");
-        console.log(pageNumber);
-        var pageRecords = records.slice((pageNumber-1)*5, pageNumber*5);
-       	component.set("v.displayList", pageRecords);
+        var pageRecords = records.slice((pageNumber-1)*10, pageNumber*10);
+        component.set("v.displayList", pageRecords);
      }
 })

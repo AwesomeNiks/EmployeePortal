@@ -1,34 +1,36 @@
+<!--
+  __Name : Vinay Gurnani
+  __Date : 11/6/2018
+  __Description : Body Component for Employee Portal page to load the Body
+-->
 <aura:component controller="BodyCmpController" access="global">
 	
   <aura:attribute name="CurrentContact" type="Contact" description="Hold the Current Logged in User's Contact details"/>
-  <aura:attribute name="Count_Emer" type="Boolean"/>
-  <!--<aura:attribute name="All_Contact" type="List"/>-->
-  <aura:attribute type="Integer"      name="pageNumber"   default="1" />
-  <aura:attribute type="Integer"      name="maxPage"      default="1" />
-  <aura:attribute name="recordId" type="id"/>
-  <aura:attribute name="DeleterecordId" type="id"/>
-  <aura:attribute name="ShowPD" type="Boolean"/>
-  <aura:attribute name="ShowCerti" type="Boolean"/>
-  <aura:attribute name="ShowEmergencyCon" type="Boolean"/>
-  <!--<aura:attribute name="All_Certi" type="List"/>-->
+    
+  <aura:attribute name="Count_Emer" type="Integer" description="Hold the Number of Emergency Contacts"/>
+    
+  <aura:attribute name="recordId" type="id" description="Holds the ID of the record to be shown in Personal Details Tab"/>
+  <aura:attribute name="DeleterecordId" type="id" description="Holds the ID of the Emergency Contact to be deleted"/>
+  <aura:attribute name="ShowPD" type="Boolean" description="Load data with LDS"/>
+    <!--<aura:attribute name="ShowCerti" type="Boolean"/>-->
+  <aura:attribute name="ShowEmergencyCon" type="Boolean" description="Load data with LDS"/>
+    <!--<aura:attribute name="All_Certi" type="List"/>-->
   <aura:attribute name="Current_Contact_Certificate" type="Certificate__c[]" description="Hold the Current Logged in User's Certificate details"/>
 
   <aura:attribute name="Current_Emergency_Contact" type="Contact[]" description="Hold the Current Logged in User's Emergency Contact details"/>
 
   <aura:attribute name="Search_Contact" type="Contact[]" description="Hold the Contact List of Searched Keyword"/>
 
-  <aura:handler  name="setAttribute" event="c:setMaxPageEvent" action="{!c.setAttributeValue}"/>
-
-  <!-- Initialization of the CurrentContact,Current_Contact_Certificate and Current_Emergency_Contact-->
- <aura:handler name="init" value="{!this}" action="{!c.get_Details}"/>
+    <!-- Initialization of the CurrentContact,Current_Contact_Certificate and Current_Emergency_Contact-->
+  <aura:handler name="init" value="{!this}" action="{!c.get_Details}"/>
     
 	<lightning:tabset variant="vertical">
     <!-- PERSONAL DETAILS TAB -->
     <aura:if isTrue="{!v.ShowPD}">
       <force:recordData aura:id="PersonalDetailsLoader"
-      					recordId="{!v.recordId}"
-      					fields="FirstName,LastName,Designation__c,Technology__c,Social_Media_Link__c,Interests__c"
-      					targetFields="{!v.CurrentContact}"
+      					        recordId="{!v.recordId}"
+      					        fields="FirstName,LastName,Designation__c,Technology__c,Social_Media_Link__c,Interests__c"
+      					        targetFields="{!v.CurrentContact}"
       />
      </aura:if>
       <lightning:tab label="Personal Details">
@@ -41,6 +43,7 @@
             	<div class="slds-truncate">{!v.CurrentContact.FirstName}</div>
         		</td>        		
     		  </tr>
+
           <tr>
             <th scope="col" class="slds-text-title_caps slds-text-heading_label">
               <div class="slds-truncate" title="Last Name"><b>Last Name</b></div>
@@ -84,98 +87,103 @@
             <td scope="col">
               <div class="slds-truncate">{!v.CurrentContact.Interests__c}</div>
             </td>               
-            </tr>
-		      </table>
-        </lightning:tab>
+          </tr>
+		    </table>
+      </lightning:tab>
 
         <!-- CERTIFICATION TAB -->
-        <lightning:tab label="Certification">
-        <lightning:overlayLibrary aura:id="overlayLib"/>
+      <lightning:tab label="Certification">
+      <lightning:overlayLibrary aura:id="overlayLib"/>
+        <!--Add New Certificate-->
         <lightning:button name="modal" label="Add Certificate" onclick="{!c.handleShowModal}"/>
-            <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_cell-buffer">
-              
-              <tr class="slds-text-title_caps">
-                <th scope="col">
-                         <div class="slds-truncate" title="Name">Name</div>
-                </th>
-                <th scope="col">
-                        <div class="slds-truncate" title="Link">Link</div>
-                </th>
-                <th scope="col">
-                        <div class="slds-truncate" title="Expiration">Expiration</div>
-                </th>
-              </tr>
-              <aura:iteration items="{!v.Current_Contact_Certificate}" var="Certificate" indexVar="indx">
+          <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_cell-buffer">
+            <tr class="slds-text-title_caps">
+              <th scope="col">
+                  <div class="slds-truncate" title="Name">Name</div>
+              </th>
+              <th scope="col">
+                  <div class="slds-truncate" title="Link">Link</div>
+              </th>
+              <th scope="col">
+                  <div class="slds-truncate" title="Expiration">Expiration</div>
+              </th>
+            </tr>
+
+            <aura:iteration items="{!v.Current_Contact_Certificate}" var="Certificate" indexVar="indx">
               <tr>
                 <td scope="col">
-                    <div class="slds-truncate" title="Name1">{!Certificate.Name}</div>
+                  <div class="slds-truncate" title="Name1">{!Certificate.Name}</div>
                 </td>
                 <td scope="col">
-                    <div class="slds-truncate">{!Certificate.Link__c}</div>
+                  <div class="slds-truncate">{!Certificate.Link__c}</div>
                 </td> 
                 <td scope="col">
-                    <div class="slds-truncate">{!Certificate.Valid_Till__c}</div>
+                  <div class="slds-truncate">{!Certificate.Valid_Till__c}</div>
                 </td>              
                 <td>
-              <lightning:button name="modal1" label="Edit" value="{!indx}" onclick="{!c.edit}" />
-            </td>
+                  <!--Edit Certificate-->
+                  <lightning:button name="modal1" label="Edit" value="{!indx}" onclick="{!c.edit}" />
+                </td>
               </tr>
-              
-              </aura:iteration>
+            </aura:iteration>
           </table>
+          <!--Pie Chart components to show No of Employees by Certifications Holding-->
           <c:PieChart/>
         </lightning:tab>
+
+        <!--EMERGENCY CONTACT TAB -->
         <lightning:tab label="Emergency Contact">
             <aura:if isTrue="{!v.ShowEmergencyCon}">
-            <force:recordData aura:id="deleteRecorddetails"
-								recordId="{!v.DeleterecordId}"
-								fields="Id"
-                             	recordUpdated="{!c.recordUpdated}"
-                  />
+              <force:recordData aura:id="deleteRecorddetails"
+								                recordId="{!v.DeleterecordId}"
+								                fields="Id"
+                             	  recordUpdated="{!c.recordUpdated}"
+              />
              </aura:if>
              <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_cell-buffer">
-              
               <tr class="slds-text-title_caps">
                 <th scope="col">
-                         <div class="slds-truncate" title="Name">Name</div>
+                  <div class="slds-truncate" title="Name">Name</div>
                 </th>
                 <th scope="col">
-                        <div class="slds-truncate" title="Phone">Phone</div>
+                  <div class="slds-truncate" title="Phone">Phone</div>
                 </th>
                 <th scope="col">
-                        <div class="slds-truncate" title="Email">Email</div>
+                  <div class="slds-truncate" title="Email">Email</div>
                 </th>
-                 <th scope="col">
-                        <div class="slds-truncate" title="Relationship">Relationship</div>
+                <th scope="col">
+                  <div class="slds-truncate" title="Relationship">Relationship</div>
                 </th>
               </tr>
+
               <aura:iteration items="{!v.Current_Emergency_Contact}" var="Econtact" >
-              <tr>
-                <td scope="col">
+                <tr>
+                  <td scope="col">
                     <div class="slds-truncate">{!Econtact.Name}</div>
-                </td>
-                <td scope="col">
+                  </td>
+                  <td scope="col">
                     <div class="slds-truncate">{!Econtact.Phone}</div>
-                </td> 
-                <td scope="col">
+                  </td> 
+                  <td scope="col">
                     <div class="slds-truncate">{!Econtact.Email}</div>
-                </td>              
-                <td scope="col">
+                  </td>              
+                  <td scope="col">
                     <div class="slds-truncate">{!Econtact.RelationShip__c}</div>
-                </td> 
-                <td>
-                 <aura:if isTrue="{!v.Count_Emer>1}">
-                    <lightning:button label="Delete" value="{!Econtact.Id}" onclick="{!c.Delete_Emer_Contact}"/>
-                 </aura:if> 
-                </td>
-              </tr>   
+                  </td> 
+                  <td>
+                    <aura:if isTrue="{!v.Count_Emer>1}">
+                      <!--Delete Emergency Contact -->
+                      <lightning:button label="Delete" value="{!Econtact.Id}" onclick="{!c.Delete_Emer_Contact}"/>
+                    </aura:if> 
+                  </td>
+                </tr>   
               </aura:iteration>
           </table>
         </lightning:tab>
+        <!-- KNOW YOUR COLLEAGUES TAB -->
         <lightning:tab label="Know Your Colleagues">
-            
-        <c:PaginationCmp currentPageNumber="{!v.pageNumber}" 
-                        maxPageNumber="{!v.maxPage}"/>
+          <!--Pagination component to show all contacts with Pagination and search bar -->
+          <c:PaginationCmp/>
         </lightning:tab>
     </lightning:tabset>
 </aura:component>
