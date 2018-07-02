@@ -6,7 +6,9 @@
 <aura:component controller="BodyCmpController" access="global">
 	
   <aura:attribute name="CurrentContact" type="Contact" description="Hold the Current Logged in User's Contact details"/>
-    
+  <aura:attribute name="data" type="Object"/>
+  <aura:attribute name="type" type="String" default="pie"/>
+  <aura:attribute name="showChart" type="Boolean"/>  
   <aura:attribute name="Count_Emer" type="Integer" description="Hold the Number of Emergency Contacts"/>
     
   <aura:attribute name="recordId" type="id" description="Holds the ID of the record to be shown in Personal Details Tab"/>
@@ -127,8 +129,11 @@
               </tr>
             </aura:iteration>
           </table>
+          <aura:if isTrue="{!v.showChart}">
           <!--Pie Chart components to show No of Employees by Certifications Holding-->
-          <c:PieChart/>
+          <c:Generic_Chart data="{!v.data}" type="line"/>
+          <!--<c:PieChart/>-->
+        </aura:if>
         </lightning:tab>
 
         <!--EMERGENCY CONTACT TAB -->

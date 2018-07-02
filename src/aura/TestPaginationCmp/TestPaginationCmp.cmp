@@ -1,0 +1,36 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global" controller="TestPagination">
+	<aura:attribute Name="Cpage" type="Integer" default="1"/>
+	<aura:attribute Name="All" type="List"/>
+	<aura:attribute Name="Current" type="List"/>
+	<aura:attribute Name="Display" type="List"/>
+	
+
+	<aura:handler name="init" value="{!this}" action="{!c.myAction}" aura:id="max"/>
+	<table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_cell-buffer">
+          <tr>
+            <td><div class="slds-truncate">Name</div></td>
+           
+          </tr>
+          <aura:iteration items="{!v.Display}" var="Acontact" indexVar="key">
+              <tr>
+                <td scope="col">
+                    <div class="slds-truncate">{!Acontact.Name}<br/>
+                    </div>
+                </td>
+            </tr>
+          </aura:iteration>
+        </table>
+    	
+    <div class="slds-button-group" role="group">
+        
+        <button onclick="{!c.prevPage}" class="slds-button slds-button--neutral">
+            Prev
+        </button>
+        
+        <button onclick="{!c.nextPage}" class="slds-button slds-button--neutral">
+            Next
+        </button>
+        
+    </div>
+
+</aura:component>

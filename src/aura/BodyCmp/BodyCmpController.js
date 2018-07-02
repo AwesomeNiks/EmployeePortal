@@ -7,6 +7,14 @@
     	helper.GetCertificateDetails(component);
       //Fetch details for Emergency Contact tab
     	helper.GetEmergencyContacts(component);
+      var action = component.get("c.getPieInfo");
+        action.setCallback(this, function(response){
+            component.set("v.data",response.getReturnValue());
+            console.log("The pie chart");
+            component.set("v.showChart",true);
+            console.log(component.get("v.data"));
+          });
+        $A.enqueueAction(action);
     },
   //creates a new component to display pop up to add new certificate   
 	handleShowModal: function(component, evt, helper) {

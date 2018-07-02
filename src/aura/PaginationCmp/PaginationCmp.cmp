@@ -40,10 +40,10 @@ __Description : Child component of Body Component to show all contacts with Pagi
         </table>
     	
         <div class="slds-button-group" role="group">
-            <button onclick="{!c.firstPage}" class="slds-button slds-button--neutral">
+            <button onclick="{!c.firstPage}" disabled="{!v.currentPageNumber==1}" class="slds-button slds-button--neutral">
                 First
             </button>
-            <button onclick="{!c.prevPage}" class="slds-button slds-button--neutral">
+            <button onclick="{!c.prevPage}" disabled="{!v.currentPageNumber==1}" class="slds-button slds-button--neutral">
                 Prev
             </button>
             <aura:if isTrue="{!v.max}">
@@ -51,10 +51,10 @@ __Description : Child component of Body Component to show all contacts with Pagi
                     {!v.currentPageNumber} / {!v.maxPageNumber}
                 </button>
             </aura:if>
-            <button onclick="{!c.nextPage}" class="slds-button slds-button--neutral">
+            <button onclick="{!c.nextPage}" disabled="{!v.currentPageNumber==v.maxPageNumber}" class="slds-button slds-button--neutral">
                 Next
             </button>
-            <button onclick="{!c.lastPage}" class="slds-button slds-button--neutral">
+            <button onclick="{!c.lastPage}" disabled="{!v.currentPageNumber==v.maxPageNumber}" class="slds-button slds-button--neutral">
                 Last
             </button>
         </div>

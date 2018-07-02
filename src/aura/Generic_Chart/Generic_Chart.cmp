@@ -1,0 +1,11 @@
+<aura:component controller="Generic_Chart_Controller" implements="flexipage:availableForAllPageTypes">
+	<!--<c:Service_Component aura:id="Service"/>-->
+	<aura:attribute name="data" type="Object"/>
+	<aura:attribute name="type" type="String"/>
+	<aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+	<ltng:require scripts="{!$Resource.Chart}" afterScriptsLoaded="{!c.generateChart}"/>
+    <div class="slds-box">
+		<canvas aura:id="chart" height="1" width="5"></canvas>
+    </div>
+</aura:component>
