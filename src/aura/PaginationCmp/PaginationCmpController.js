@@ -72,7 +72,7 @@
     	
         if (key===""){
     		
-    		component.set("v.togglePagi",false);
+    		
     		console.log("false");
      		component.set("v.currentPageNumber",1);
             component.set("v.maxPageNumber",component.get("v.originalValue"));
